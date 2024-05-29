@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>FiltersJs PDI</title>
+    <title>PixelEdit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/logo.png" />
     <link rel="stylesheet" href="app.css" />
@@ -25,7 +25,9 @@
               primary200: "#acc2ef",
               primary300: "#4d648d",
               primary400: "#1f2b3e",
-              primary500: "#0F1C2E",
+              primary500: "#FFFFFF",
+              text100: "#333333",
+              text200: "#5c5c5c"
             },
           },
         },
@@ -43,206 +45,122 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-primary500">
-    <!-- Navbar -->
-    <nav
-      class="bg-primary500 fixed w-full z-20 top-0 start-0 border-b-2 border-gray-200/[0.3]"
-    >
-      <div
-        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-      >
-        <div class="h-10 w-10">
-          <a href="/" class="flex items-center space-x-2">
-            <p class="text-white text-lg font-semibold">VisText</p>
-            <img src="./img/logo.png" alt="logo" />
-          </a>
-        </div>
-        <div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-          <a
-            href="/index.html"
-            class="text-blue-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            >Comenzar</a
-          >
-          <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-sticky"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
-          id="navbar-sticky"
-        >
-          <ul
-            class="flex flex-col p-4 lg:p-0 mt-4 font-medium lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0"
-          >
-            <li>
-              <a
-                href="/index.html"
-                class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-blue-700 lg:p-0"
-                aria-current="page"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="/about.html"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >Acerca de</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Buttons -->
-    <div class="lg:flex justify-center mt-24 mb-5">
-      <button
-        onclick="applyGrayScale()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        Escala Grises
-      </button>
-      <button
-        onclick="applyThreshold()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        Binarización
-        <span id="sliderValue">128</span>
-      </button>
-      <div>
-        <input
-          type="range"
-          id="thresholdSlider"
-          min="0"
-          max="255"
-          value="128"
-          class="my-3 mr-2"
-        />
-      </div>
-
-      <button
-        onclick="applyExponentialEqualization()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        Equalizacion Exponencial
-      </button>
-      <button
-        onclick="applySobelFilter()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-      >
-        Sobel
-      </button>
-      <button
-        onclick="resetFilters() "
-        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-      >
-        Resetear
-      </button>
-    </div>
-
-    <!-- Script umbral -->
-    <script>
-      const slider = document.getElementById("thresholdSlider");
-      const sliderValue = document.getElementById("sliderValue");
-
-      slider.addEventListener("input", function () {
-        sliderValue.textContent = slider.value;
-      });
-    </script>
-    <!--  -->
-
-    <!-- Upload File -->
-    <div class="flex justify-center mb-5">
-      <div class="w-1/2">
-        <label
-          for="upload"
-          class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-primary400 text-black hover:bg-primary500 transition-colors duration-300 ease-in-out"
-        >
-          <div class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-              />
-            </svg>
-            <p class="mb-2 text-lg text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span>
-            </p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-              PNG, JPG or JPEG
-            </p>
+  
+    <body class="bg-primary500 flex flex-col min-h-screen">
+      <div class="flex-grow">
+        <!-- Navbar -->
+        <nav class="bg-primary500 fixed w-full z-20 top-0 start-0 border-b-2 border-gray-200">
+          <div class="max-w-screen-xl flex flex-wrap justify-between mx-auto p-4">
+            <div class="h-10 w-10">
+              <a href="./index.html" class="flex items-center space-x-2">
+                <p class="text-text100 text-lg font-semibold">PixelEdit</p>
+                <img src="./img/logo.png" alt="logo" />
+              </a>
+            </div>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+              <a href="./index.html"
+                class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">New image</a>
+            </div>
           </div>
-          <input id="upload" type="file" class="hidden" accept="image/*" / />
-        </label>
+        </nav>
+        
+        <!-- Upload File -->
+        <div id="uploadCont" class="w-full flex justify-center mt-24 mb-5 h-[50vdh]">
+          <div class="md:w-10/12 w-full">
+            <label for="upload"
+              class="flex flex-col items-center drop-shadow-lg justify-center w-full h-[38rem] border-2 border-dashed border-[#c2c2c2] rounded-lg cursor-pointer bg-[#f5f5f5] text-black hover:bg-[#FFFFFF] transition-all duration-300 ease-in-out">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 20 16">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                </svg>
+                <p class="mb-2 text-lg text-gray-500">
+                  <span class="font-semibold">Click to upload</span>
+                </p>
+                <p class="text-sm text-gray-800">
+                  PNG, JPG or JPEG
+                </p>
+              </div>
+              <input id="upload" type="file" class="hidden" accept="image/*" / />
+            </label>
+        
+          </div>
+        </div>
+        <!--  -->
+        <div id="tools" class="hidden flex md:flex-row flex-col justify-between md:px-12 mt-28 mb-5 gap-5rem">
+          <div class="flex justify-center flex-grow overflow-hidden mx-6 ">
+            <canvas id="canvas" class="rounded-md"></canvas>
+          </div>
+        
+          <!-- Buttons -->
+          <div class="mt-24 mb-5 mx-auto flex-grow flex flex-col gap-2">
+
+            <button onclick="applyGrayScale()"
+              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              Escala Grises
+            </button>
+        
+            <div class="flex flex-row justify-between">
+              <button onclick="applyThreshold()"
+                class="flex-grow text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                Binarización:
+                <span id="sliderValue" class="">128</span>
+              </button>
+              <div>
+                <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="my-3 mr-2 flex-grow" />
+              </div>
+            </div>
+        
+            <button onclick="applyHistogramEqualization()"
+              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              Ecualización de Histograma
+            </button>
+            <button onclick="applyGaussianFilter()"
+              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              Filtro Gaussiano
+            </button>
+            <button onclick="applyNegativeLaplacianFilter()"
+              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              Filtro Laplaciano Negativo
+            </button>
+            <button onclick="resetFilters() "
+              class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              Resetear
+            </button>
+          </div>
+        </div>
+        
+        <!-- Script umbral -->
+        <script>
+          const slider = document.getElementById("thresholdSlider");
+          const sliderValue = document.getElementById("sliderValue");
+
+          slider.addEventListener("input", function () {
+            sliderValue.textContent = slider.value;
+          });
+        </script>
+        <!--  -->
+        
+        <div class="flex justify-center mt-5 max-w">
+          <div id="chart" class="bg-white w-full lg:w-2/3"></div>
+        </div>
+        
+        <script src="app.js"></script>
       </div>
-    </div>
-    <!--  -->
+    
+      <footer
+        class="mt-16 bottom-0 left-0 z-20 w-full p-4 bg-white border-t-2 border-gray-200 shadow lg:flex lg:items-center lg:justify-between lg:p-6 ">
+        <span class="text-sm text-text200 sm:text-center">© 2024. Todos los derechos reservados.
+        </span>
+        <ul class="flex justify-center flex-wrap items-center mt-3 text-sm font-medium text-text200 sm:mt-0 space-x-4">
+          <li>
+            <p>Daniel Isaí Catonga Tecla</p>
+          </li>
+        </ul>
+      </footer>
+    </body>
+  
 
-    <div class="flex justify-center overflow-hidden mx-6">
-      <canvas id="canvas" class="w-full h-full md:w-96 md:h-96"></canvas>
-    </div>
-
-    <div class="flex justify-center mt-5 max-w">
-      <div id="chart" class="bg-white w-full lg:w-2/3"></div>
-    </div>
-
-    <script src="app.js"></script>
-  </body>
-
-  <footer
-    class="mt-16 bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow lg:flex lg:items-center lg:justify-between lg:p-6 dark:bg-primary500 dark:border-gray-600"
-  >
-    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-      >© 2024 Comunidad 5. Todos los derechos reservados.
-    </span>
-    <ul
-      class="flex justify-center flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0 space-x-4"
-    >
-      <li>
-        <p>Antonio</p>
-      </li>
-      <li>
-        <p>Manuel</p>
-      </li>
-      <li>
-        <p>Ilse</p>
-      </li>
-      <li>
-        <p>Alexis</p>
-      </li>
-      <li>
-        <p>Víctor</p>
-      </li>
-    </ul>
-  </footer>
+  
 </html>
