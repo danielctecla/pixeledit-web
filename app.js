@@ -63,6 +63,12 @@ function applyGrayScale() {
 
 function applyThreshold() {
     let threshold = document.getElementById('thresholdSlider').value;
+
+    if (threshold === '' || threshold < 0 || threshold > 255) {
+        alert('Por favor, ingresa un umbral válido.');
+        return;
+    }
+    
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {

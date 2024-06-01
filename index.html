@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Varela+Round&display=swap"
       rel="stylesheet"
@@ -59,27 +60,28 @@
             </div>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <a href="./index.html"
-                class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">New image</a>
+                class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Nueva Imagen</a>
             </div>
           </div>
         </nav>
         
         <!-- Upload File -->
         <div id="uploadCont" class="w-full flex justify-center mt-24 mb-5 h-[50vdh]">
-          <div class="md:w-10/12 w-full">
+          <div class="md:w-10/12 w-full bg-gradient-to-r from-blue-500 to-green-500 p-1 rounded-lg shadow-inner hover:bg-[#FFFFFF] transition-all duration-300 ease-in-out">
             <label for="upload"
-              class="flex flex-col items-center drop-shadow-lg justify-center w-full h-[38rem] border-2 border-dashed border-[#c2c2c2] rounded-lg cursor-pointer bg-[#f5f5f5] text-black hover:bg-[#FFFFFF] transition-all duration-300 ease-in-out">
+              class="flex flex-col items-center justify-center w-full h-[38rem] rounded-lg cursor-pointer bg-[#f5f5f5] text-black hover:bg-[#FFFFFF] transition-all duration-300 ease-in-out">
               <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                  fill="none" viewBox="0 0 20 16">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15"
+                      stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </g>
                 </svg>
                 <p class="mb-2 text-lg text-gray-500">
-                  <span class="font-semibold">Click to upload</span>
-                </p>
-                <p class="text-sm text-gray-800">
-                  PNG, JPG or JPEG
+                  <span class="font-semibold">Subir archivo</span>
                 </p>
               </div>
               <input id="upload" type="file" class="hidden" accept="image/*" / />
@@ -95,37 +97,37 @@
         
           <!-- Buttons -->
           <div class="mt-24 mb-5 mx-auto flex-grow flex flex-col gap-2">
-
-            <button onclick="applyGrayScale()"
-              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-              Escala Grises
-            </button>
-        
-            <div class="flex flex-row justify-between">
-              <button onclick="applyThreshold()"
-                class="flex-grow text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                Binarización:
-                <span id="sliderValue" class="">128</span>
-              </button>
-              <div>
-                <input type="range" id="thresholdSlider" min="0" max="255" value="128" class="my-3 mr-2 flex-grow" />
-              </div>
+            
+            <div class="flex rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-0.5 shadow-lg">
+              <button 
+              onclick="applyGrayScale()"
+              class="flex-1 bg-[#ffffff] px-5 py-2.5 font-medium rounded-lg text-sm hover:text-white hover:bg-gradient-to-r hover:from-teal-400 hover:via-teal-500 hover:to-teal-600 transition-all duration-300 ease-in-out">Escala de Grises</button>
             </div>
-        
-            <button onclick="applyHistogramEqualization()"
-              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-              Ecualización de Histograma
-            </button>
-            <button onclick="applyGaussianFilter()"
-              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-              Filtro Gaussiano
-            </button>
-            <button onclick="applyNegativeLaplacianFilter()"
-              class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-              Filtro Laplaciano Negativo
-            </button>
+
+            <div class="flex flex-row justify-between mb-2">
+              <div class="flex-grow flex rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-0.5 shadow-lg rounded-r-none">
+                <button onclick="applyThreshold()"
+                  class="flex-1 bg-[#ffffff] px-5 py-2.5 font-medium rounded-lg text-sm rounded-r-none hover:text-white hover:bg-gradient-to-r hover:from-teal-400 hover:via-teal-500 hover:to-teal-600 transition-all duration-300 ease-in-out text-right">Binarizar con umbral:  </button>
+              </div>
+              <input type="input" id="thresholdSlider" min="0" max="255" 
+                class="py-2.5 text-center flex-grow border-2 focus:outline-none  shadow-lg  font-medium rounded-lg text-sm rounded-l-none" 
+                placeholder="Escribe el valor"
+                />
+            </div>
+            <div class="flex rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-0.5 shadow-lg">
+              <button onclick="applyHistogramEqualization()"
+                class="flex-1 bg-[#ffffff] px-5 py-2.5 font-medium rounded-lg text-sm hover:text-white hover:bg-gradient-to-r hover:from-teal-400 hover:via-teal-500 hover:to-teal-600 transition-all duration-300 ease-in-out">Ecualización de Histograma</button>
+            </div>
+            <div class="flex rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-0.5 shadow-lg">
+              <button onclick="applyGaussianFilter()"
+                class="flex-1 bg-[#ffffff] ease-in-out px-5 py-2.5 font-medium rounded-lg text-sm hover:text-white hover:bg-gradient-to-r hover:from-teal-400 hover:via-teal-500 hover:to-teal-600 transition-all duration-300 ease-in-out">Filtro Gaussiano</button>
+            </div>
+            <div class="flex rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-0.5 shadow-lg">
+              <button onclick="applyNegativeLaplacianFilter()"
+                class="flex-1 bg-[#ffffff] px-5 py-2.5 font-medium rounded-lg text-sm hover:text-white hover:bg-gradient-to-r hover:from-teal-400 hover:via-teal-500 hover:to-teal-600 transition-all duration-300 ease-in-out">Filtro Laplaciano Negativo</button>
+            </div>
             <button onclick="resetFilters() "
-              class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+              class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
               Resetear
             </button>
           </div>
@@ -150,12 +152,15 @@
       </div>
     
       <footer
-        class="mt-16 bottom-0 left-0 z-20 w-full p-4 bg-white border-t-2 border-gray-200 shadow lg:flex lg:items-center lg:justify-between lg:p-6 ">
+        class="mt-16 bottom-0 left-0 z-20 w-full p-4 bg-white border-t-2 border-gray-200 shadow ">
         <span class="text-sm text-text200 sm:text-center">© 2024. Todos los derechos reservados.
         </span>
         <ul class="flex justify-center flex-wrap items-center mt-3 text-sm font-medium text-text200 sm:mt-0 space-x-4">
           <li>
-            <p>Daniel Isaí Catonga Tecla</p>
+            <li>
+              <p>Daniel Isaí Catonga Tecla <a href="https://github.com/danielctecla" target="_blank"><i
+                    class="fab fa-github"></i></a></p>
+            </li>
           </li>
         </ul>
       </footer>

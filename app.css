@@ -3,3 +3,14 @@ body {
   margin-top: 20px;
   font-family: "Varela Round", sans-serif;
 }
+
+.border-gradient {
+  border-image: linear-gradient(to right, teal-400, teal-500, teal-600);
+  border-image-slice: 1;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, teal-400, teal-500, teal-600);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
