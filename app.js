@@ -1,6 +1,7 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let originalImageData = null;
+let gray = false;
 
 document.getElementById('upload').addEventListener('change', function(e) {
     let reader = new FileReader();
@@ -57,6 +58,9 @@ function applyGrayScale() {
         let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
         data[i] = data[i + 1] = data[i + 2] = avg; 
     }
+
+    grayscale = true;
+
     ctx.putImageData(imageData, 0, 0);
     generateHistogram(imageData); 
 }
@@ -88,7 +92,7 @@ function applyNegativeLaplacianFilter() {
     let width = canvas.width;
     let height = canvas.height;
 
-    // Define the negative Laplacian kernel
+    // Define the Laplacian kernel
     let kernel = [
         [0, -1, 0],
         [-1, 4, -1],
@@ -113,9 +117,12 @@ function applyNegativeLaplacianFilter() {
                 }
             }
             let idx = (y * width + x) * 4;
-            output[idx] = 255 - r; // Negative Laplacian
-            output[idx + 1] = 255 - g;
-            output[idx + 2] = 255 - b;
+            let laplacian = r + g + b;
+            laplacian = Math.min(255, Math.max(0, laplacian)); // Clamp to [0, 255]
+            let inverted = 255 - laplacian; // Invert to get white lines on black background
+            output[idx] = inverted;
+            output[idx + 1] = inverted;
+            output[idx + 2] = inverted;
             output[idx + 3] = data[idx + 3]; // Alpha channel remains unchanged
         }
     }
@@ -128,6 +135,8 @@ function applyNegativeLaplacianFilter() {
 
     generateHistogram(imageData);
 }
+
+
 
 
 function applyGaussianFilter(sigma = 1.0) {
@@ -198,7 +207,6 @@ function applyHistogramEqualization() {
     let data = imageData.data;
     let hist = new Array(256).fill(0);
     let cdf = new Array(256).fill(0);
-    let equalizedData = new Array(data.length);
 
     // Step 1: Compute the histogram
     for (let i = 0; i < data.length; i += 4) {
@@ -217,49 +225,30 @@ function applyHistogramEqualization() {
     let totalPixels = canvas.width * canvas.height;
     for (let i = 0; i < cdf.length; i++) {
         cdf[i] = Math.round((cdf[i] - cdfMin) / (totalPixels - cdfMin) * 255);
+        if (cdf[i] < 0) {
+            cdf[i] = 0;
+        }
+        if (cdf[i] > 255) {
+            cdf[i] = 255;
+        }
     }
 
     // Step 4: Map the original pixel values to the equalized values
     for (let i = 0; i < data.length; i += 4) {
         let grayscale = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
         let equalizedValue = cdf[grayscale];
-        equalizedData[i] = equalizedValue;
-        equalizedData[i + 1] = equalizedValue;
-        equalizedData[i + 2] = equalizedValue;
-        equalizedData[i + 3] = data[i + 3]; // Alpha channel remains unchanged
+        data[i] = equalizedValue;
+        data[i + 1] = equalizedValue;
+        data[i + 2] = equalizedValue;
+        // Alpha channel remains unchanged
     }
 
     // Step 5: Update the image data with the equalized values
-    for (let i = 0; i < data.length; i++) {
-        data[i] = equalizedData[i];
-    }
-
     ctx.putImageData(imageData, 0, 0);
 
     generateHistogram(imageData);
 }
 
-
-function applyExponentialEqualization() {
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
-    const constant = 1.0; 
-
-    let maxVal = 0;
-    for (let i = 0; i < data.length; i += 4) {
-        maxVal = Math.max(data[i], data[i+1], data[i+2], maxVal);
-    }
-
-    for (let i = 0; i < data.length; i += 4) {
-        data[i] = 255 * (1 - Math.exp(-constant * data[i] / maxVal)); // red
-        data[i + 1] = 255 * (1 - Math.exp(-constant * data[i + 1] / maxVal)); // green
-        data[i + 2] = 255 * (1 - Math.exp(-constant * data[i + 2] / maxVal)); // blue
-    }
-
-    ctx.putImageData(imageData, 0, 0);
-
-    generateHistogram(imageData);
-}
 
 function resetFilters() {
     if (originalImageData) {
@@ -271,9 +260,16 @@ function generateHistogram(imageData) {
     let greyFrequencies = new Array(256).fill(0);
     let data = imageData.data;
 
-    for (let i = 0; i < data.length; i += 4) {
-        let grayscale = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
-        greyFrequencies[grayscale]++;
+    if(grayscale === false) {
+        for (let i = 0; i < data.length; i += 4) {
+            let grayscale = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+            greyFrequencies[grayscale]++;
+        }
+    }else{
+        for (let i = 0; i < data.length; i += 4) {
+            let grayscale = data[i];
+            greyFrequencies[grayscale]++;
+        }
     }
 
     var options = {
@@ -313,11 +309,11 @@ function generateHistogram(imageData) {
     };
 
     if (window.chart) {
-        window.chart.updateOptions(options);
-    } else {
-        window.chart = new ApexCharts(document.querySelector("#chart"), options);
-        window.chart.render();
+        window.chart.destroy(); // Destruir el gráfico existente
     }
+
+    window.chart = new ApexCharts(document.querySelector("#chart"), options);
+    window.chart.render();
 }
 
 
